@@ -7,8 +7,10 @@ class DropdownExample extends StatefulWidget {
 }
 
 class _DropdownExampleState extends State<DropdownExample> {
+  // Default selected value
   String selectedValue = 'Apple';
 
+  // List of items in dropdown
   final List<Map<String, dynamic>> items = [
     {'fruit': 'Apple', 'color': Colors.red},
     {'fruit': 'Banana', 'color': Colors.yellow},
@@ -31,50 +33,32 @@ class _DropdownExampleState extends State<DropdownExample> {
             border: Border.all(color: Colors.blueAccent),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton2<String>(
-              value: selectedValue,
-              hint: Text('Select Fruit'),
-              isExpanded: true,
-              style: const TextStyle(color: Colors.black, fontSize: 18),
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedValue = newValue!;
-                  selectedColor = items.firstWhere(
-                    (item) => item['fruit'] == newValue,
-                  )['color'];
-                });
-              },
-              buttonStyleData: ButtonStyleData(
-                height: 50,
-                width: 180,
-                padding: EdgeInsets.symmetric(horizontal: 14),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  border: Border.fromBorderSide(BorderSide(color: Colors.grey)),
-                ),
-              ),
-              dropdownStyleData: DropdownStyleData(
-                direction: DropdownDirection.left,
-                maxHeight: 200,
-                decoration: BoxDecoration(
-                  color: selectedColor,
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                ),
-              ),
-              items: items.map<DropdownMenuItem<String>>((mp) {
-                return DropdownMenuItem<String>(
-                  value: mp['fruit'],
-                  child: Row(
-                    children: [
-                      CircleAvatar(backgroundColor: mp['color'], radius: 8),
-                      const SizedBox(width: 10),
-                      Text(mp['fruit']),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ),
+          child: DropdownButton<String>(
+            value: selectedValue,
+            icon: Icon(Icons.arrow_drop_down),
+            iconSize: 36,
+            elevation: 8,
+            style: TextStyle(color: Colors.black, fontSize: 18),
+            underline: SizedBox(), // removes default underline
+            onChanged: (String? newValue) {
+              setState(() {
+                selectedValue = newValue!;
+              });
+            },
+            dropdownColor: selectedcolor,
+            items: items.map<DropdownMenuItem<String>>((
+              Map<String, dynamic> mp,
+            ) {
+              return DropdownMenuItem<String>(
+                onTap: () {
+                  setState(() {
+                    selectedcolor = mp['color'];
+                  });
+                },
+                value: mp['fruit'].toString(),
+                child: Text(mp['fruit']),
+              );
+            }).toList(),
           ),
         ),
       ),
