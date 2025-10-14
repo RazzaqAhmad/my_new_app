@@ -7,10 +7,8 @@ class DropdownExample extends StatefulWidget {
 }
 
 class _DropdownExampleState extends State<DropdownExample> {
-  // Default selected value
   String selectedValue = 'Apple';
 
-  // List of items in dropdown
   final List<Map<String, dynamic>> items = [
     {'fruit': 'Apple', 'color': Colors.red},
     {'fruit': 'Banana', 'color': Colors.yellow},
@@ -19,7 +17,7 @@ class _DropdownExampleState extends State<DropdownExample> {
     {'fruit': 'Mango', 'color': Colors.amber},
   ];
 
-  Color selectedColor = Colors.red; // Default color for 'Apple'
+  Color selectedColor = Colors.red;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +55,8 @@ class _DropdownExampleState extends State<DropdownExample> {
                 ),
               ),
               dropdownStyleData: DropdownStyleData(
-                direction:
-                    DropdownDirection.left, // 👈 Force dropdown to open DOWN
-                maxHeight: 200, // limit height
+                direction: DropdownDirection.left,
+                maxHeight: 200,
                 decoration: BoxDecoration(
                   color: selectedColor,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
