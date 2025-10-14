@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class DropdownExample extends StatefulWidget {
@@ -14,48 +15,69 @@ class _DropdownExampleState extends State<DropdownExample> {
     {'fruit': 'Apple', 'color': Colors.red},
     {'fruit': 'Banana', 'color': Colors.yellow},
     {'fruit': 'Grapes', 'color': Colors.green},
-    {'fruit': 'Orange', 'color': Colors.cyanAccent},
-    {'fruit': 'Mango', 'color': Colors.blue},
+    {'fruit': 'Orange', 'color': Colors.orange},
+    {'fruit': 'Mango', 'color': Colors.amber},
   ];
 
-  Color? selectedcolor;
+  Color selectedColor = Colors.red; // Default color for 'Apple'
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Flutter Dropdown Example')),
+      appBar: AppBar(title: const Text('Flutter Dropdown Example')),
       body: Center(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          width: 1300,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.blueAccent),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: DropdownButton<String>(
-            value: selectedValue,
-            icon: Icon(Icons.arrow_drop_down),
-            iconSize: 36,
-            elevation: 8,
-            style: TextStyle(color: Colors.black, fontSize: 18),
-            underline: SizedBox(), // removes default underline
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedValue = newValue!;
-              });
-            },
-            dropdownColor: selectedcolor,
-            items: items.map<DropdownMenuItem<String>>((
-              Map<String, dynamic> mp,
-            ) {
-              return DropdownMenuItem<String>(
-                onTap: () {
-                  setState(() {
-                    selectedcolor = mp['color'];
-                  });
-                },
-                value: mp['fruit'].toString(),
-                child: Text(mp['fruit']),
-              );
-            }).toList(),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton2<String>(
+              value: selectedValue,
+              hint: Text('Select Fruit'),
+              isExpanded: true,
+              style: const TextStyle(color: Colors.black, fontSize: 18),
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedValue = newValue!;
+                  selectedColor = items.firstWhere(
+                    (item) => item['fruit'] == newValue,
+                  )['color'];
+                });
+              },
+              buttonStyleData: ButtonStyleData(
+                height: 50,
+                width: 180,
+                padding: EdgeInsets.symmetric(horizontal: 14),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  border: Border.fromBorderSide(BorderSide(color: Colors.grey)),
+                ),
+              ),
+              dropdownStyleData: DropdownStyleData(
+                direction:
+                    DropdownDirection.left, // 👈 Force dropdown to open DOWN
+                maxHeight: 200, // limit height
+                decoration: BoxDecoration(
+                  color: selectedColor,
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+              ),
+              items: items.map<DropdownMenuItem<String>>((mp) {
+                return DropdownMenuItem<String>(
+                  value: mp['fruit'],
+                  child: Row(
+                    children: [
+                      CircleAvatar(backgroundColor: mp['color'], radius: 8),
+                      const SizedBox(width: 10),
+                      Text(mp['fruit']),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
           ),
         ),
       ),
