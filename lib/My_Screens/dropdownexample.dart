@@ -6,10 +6,8 @@ class DropdownExample extends StatefulWidget {
 }
 
 class _DropdownExampleState extends State<DropdownExample> {
-  // Default selected value
+  
   String selectedValue = 'Apple';
-
-  // List of items in dropdown
   final List<Map<String, dynamic>> items = [
     {'fruit': 'Apple', 'color': Colors.red},
     {'fruit': 'Banana', 'color': Colors.yellow},
@@ -36,7 +34,7 @@ class _DropdownExampleState extends State<DropdownExample> {
             iconSize: 36,
             elevation: 8,
             style: TextStyle(color: Colors.black, fontSize: 18),
-            underline: SizedBox(), // removes default underline
+            underline: SizedBox(), 
             onChanged: (String? newValue) {
               setState(() {
                 selectedValue = newValue!;
