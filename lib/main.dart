@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_new_app/My_Screens/dropdownexample.dart';
+import 'package:my_new_app/Models/todo.dart';
+import 'package:my_new_app/My_Screens/alltodos_screen.dart';
 
 void main() {
+  todolist.forEach(
+    (element) => print(element.title + "" + element.iScompleted.toString()),
+  );
   runApp(const MyApp());
 }
 
@@ -11,11 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: DropdownExample(),
+      home: AllTodosScreen(),
     );
   }
 }
