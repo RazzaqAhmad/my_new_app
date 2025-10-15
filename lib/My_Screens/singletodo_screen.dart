@@ -12,8 +12,8 @@ class SingleTodoScreen extends StatefulWidget {
 }
 
 class _SingleTodoScreenState extends State<SingleTodoScreen> {
-  bool? Ischecked;
-  void Updatetodo() {
+  bool? ischecked;
+  void updatetodo() {
     setState(() {
       int i = todolist.indexWhere((t) => t.title == widget.todo.title);
 
@@ -21,7 +21,7 @@ class _SingleTodoScreenState extends State<SingleTodoScreen> {
         todolist[i] = Todo(
           title: widget.todo.title,
           date: widget.todo.date,
-          iScompleted: Ischecked! ? true : false,
+          iScompleted: ischecked! ? true : false,
         );
       }
     });
@@ -29,9 +29,10 @@ class _SingleTodoScreenState extends State<SingleTodoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Ischecked = widget.todo.iScompleted ? true : false;
+    ischecked = widget.todo.iScompleted ? true : false;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green,
         centerTitle: true,
         title: Text(
           "Sinlge Todo Screen",
@@ -45,11 +46,11 @@ class _SingleTodoScreenState extends State<SingleTodoScreen> {
             children: [
               ListTile(
                 leading: Checkbox(
-                  value: Ischecked,
+                  value: ischecked,
                   onChanged: (value) {
                     setState(() {
-                      Ischecked = value;
-                      widget.todo.iScompleted = Ischecked!;
+                      ischecked = value;
+                      widget.todo.iScompleted = ischecked!;
                     });
                   },
                 ),
@@ -69,7 +70,7 @@ class _SingleTodoScreenState extends State<SingleTodoScreen> {
                   elevation: 1,
                   minimumSize: Size(400, 40),
                 ),
-                onPressed: Updatetodo,
+                onPressed: updatetodo,
                 child: Text(
                   "Update",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
