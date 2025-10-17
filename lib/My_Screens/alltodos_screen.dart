@@ -1,20 +1,32 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_new_app/Models/todo.dart';
 import 'package:my_new_app/My_Screens/singletodo_screen.dart';
 
 class AllTodosScreen extends StatefulWidget {
-  const AllTodosScreen({super.key});
-
+  final Function(bool) onThemeChanged;
+  const AllTodosScreen({Key? key, required this.onThemeChanged})
+    : super(key: key);
   @override
   State<AllTodosScreen> createState() => _AllTodosScreenState();
 }
 
 class _AllTodosScreenState extends State<AllTodosScreen> {
+  bool _isDark = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(_isDark ? Icons.light_mode : Icons.dark_mode),
+            onPressed: () {
+              setState(() {
+                _isDark = !_isDark;
+                widget.onThemeChanged(_isDark);
+              });
+            },
+          ),
+        ],
         centerTitle: true,
         backgroundColor: Colors.green,
         title: Text(

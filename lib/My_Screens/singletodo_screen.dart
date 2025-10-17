@@ -81,6 +81,5 @@ class _SingleTodoScreenState extends State<SingleTodoScreen> {
         ),
       ),
     );
-    ;
   }
 }
