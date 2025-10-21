@@ -11,9 +11,8 @@ class SingleTodoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<TodoProvider>();
     bool? isCHk = false;
-    // find the updated todo by id or title
     final updatedTodo = provider.todos.firstWhere(
-      (t) => t.title == stodo.title, // ✅ safer than comparing title
+      (t) => t.title == stodo.title,
       orElse: () => stodo,
     );
 
@@ -30,7 +29,7 @@ class SingleTodoScreen extends StatelessWidget {
                   onChanged: (_) {
                     provider.toggleCheck();
                     updatedTodo.iScompleted = provider.isCheck;
-                    isCHk = provider.isCheck; // ✅ toggle method from provider
+                    isCHk = provider.isCheck;
                   },
                 ),
                 title: Text(
@@ -63,7 +62,7 @@ class SingleTodoScreen extends StatelessWidget {
                     ? () {
                         provider.update(stodo);
                       }
-                    : null, // 🚫 disables the button when false
+                    : null,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 80),
                 ),
