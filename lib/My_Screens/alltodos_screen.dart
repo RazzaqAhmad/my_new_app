@@ -1,30 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:my_new_app/Models/todo.dart';
-import 'package:my_new_app/My_Screens/singletodo_screen.dart';
+import 'package:my_new_app/models/todo.dart';
+import 'package:my_new_app/my_screens/singletodo_screen.dart';
+import 'package:my_new_app/providers/themprovider.dart';
+import 'package:my_new_app/providers/withprovider.dart';
+import 'package:provider/provider.dart';
 
 class AllTodosScreen extends StatefulWidget {
-  final Function(bool) onThemeChanged;
-  const AllTodosScreen({Key? key, required this.onThemeChanged})
-    : super(key: key);
+  const AllTodosScreen({Key? key}) : super(key: key);
   @override
   State<AllTodosScreen> createState() => _AllTodosScreenState();
 }
 
 class _AllTodosScreenState extends State<AllTodosScreen> {
-  bool _isDark = false;
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<TodoProvider>();
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(_isDark ? Icons.light_mode : Icons.dark_mode),
-            onPressed: () {
-              setState(() {
-                _isDark = !_isDark;
-                widget.onThemeChanged(_isDark);
-              });
-            },
+            icon: Icon(
+              context.watch<ThemeProvider>().isDark
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
+            ),
+            tooltip: context.watch<ThemeProvider>().isDark
+                ? 'Switch to Light Mode'
+                : 'Switch to Dark Mode',
+            onPressed: () => context.read<ThemeProvider>().toggleTheme(),
           ),
         ],
         centerTitle: true,
@@ -41,33 +44,50 @@ class _AllTodosScreenState extends State<AllTodosScreen> {
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: todolist.length,
+                  itemCount: provider.todos.length,
                   itemBuilder: (context, index) {
+                    var singletodo = provider.todos[index];
                     return ListTile(
+                      leading: Text(
+                        '${index + 1}=>',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      title: Text(
+                        singletodo.title,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        singletodo.date,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      trailing: Text(
+                        singletodo.iScompleted ? "Completed" : "Pendeing",
+                        style: TextStyle(
+                          color: singletodo.iScompleted
+                              ? Colors.green
+                              : Colors.red,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) {
-                              return SingleTodoScreen(todo: todolist[index]);
-                            },
+                            builder: (context) =>
+                                SingleTodoScreen(stodo: singletodo),
                           ),
                         );
                       },
-                      hoverColor: Colors.blue,
-                      //tileColor: Colors.greenAccent,
-                      leading: Text("Task ${index + 1}"),
-                      title: Text(
-                        todolist[index].title,
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(todolist[index].date),
-                      trailing: Text(
-                        todolist[index].iScompleted ? "Completed" : "Pending",
-                      ),
                     );
                   },
                 ),

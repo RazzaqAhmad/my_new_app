@@ -1,79 +1,75 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:my_new_app/Models/todo.dart';
+import 'package:my_new_app/models/todo.dart';
+import 'package:my_new_app/providers/withprovider.dart';
+import 'package:provider/provider.dart';
 
-class SingleTodoScreen extends StatefulWidget {
-  final Todo todo;
-  const SingleTodoScreen({super.key, required this.todo});
-
-  @override
-  State<SingleTodoScreen> createState() => _SingleTodoScreenState();
-}
-
-class _SingleTodoScreenState extends State<SingleTodoScreen> {
-  bool? ischecked;
-  void updatetodo() {
-    setState(() {
-      int i = todolist.indexWhere((t) => t.title == widget.todo.title);
-
-      if (i != -1) {
-        todolist[i] = Todo(
-          title: widget.todo.title,
-          date: widget.todo.date,
-          iScompleted: ischecked! ? true : false,
-        );
-      }
-    });
-  }
+class SingleTodoScreen extends StatelessWidget {
+  final Todo stodo;
+  const SingleTodoScreen({super.key, required this.stodo});
 
   @override
   Widget build(BuildContext context) {
-    ischecked = widget.todo.iScompleted ? true : false;
+    final provider = context.watch<TodoProvider>();
+    bool? isCHk = false;
+    // find the updated todo by id or title
+    final updatedTodo = provider.todos.firstWhere(
+      (t) => t.title == stodo.title, // ✅ safer than comparing title
+      orElse: () => stodo,
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        centerTitle: true,
-        title: Text(
-          "Sinlge Todo Screen",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ),
+      appBar: AppBar(title: Text(updatedTodo.title)),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(25),
           child: Column(
             children: [
               ListTile(
                 leading: Checkbox(
-                  value: ischecked,
-                  onChanged: (value) {
-                    setState(() {
-                      ischecked = value;
-                      widget.todo.iScompleted = ischecked!;
-                    });
+                  value: updatedTodo.iScompleted,
+                  onChanged: (_) {
+                    provider.toggleCheck();
+                    updatedTodo.iScompleted = provider.isCheck;
+                    isCHk = provider.isCheck; // ✅ toggle method from provider
                   },
                 ),
                 title: Text(
-                  widget.todo.title,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  updatedTodo.title,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                subtitle: Text(widget.todo.date),
+                subtitle: Text(
+                  updatedTodo.date,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
                 trailing: Text(
-                  widget.todo.iScompleted ? "Completed" : "Pending",
+                  stodo.iScompleted ? "Completed" : "Pending",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: updatedTodo.iScompleted
+                        ? Colors.green
+                        : Colors.orangeAccent,
+                  ),
                 ),
               ),
-              SizedBox(height: 100),
               ElevatedButton(
+                onPressed: isCHk == false
+                    ? () {
+                        provider.update(stodo);
+                      }
+                    : null, // 🚫 disables the button when false
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  elevation: 1,
-                  minimumSize: Size(400, 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 80),
                 ),
-                onPressed: updatetodo,
-                child: Text(
+                child: const Text(
                   "Update",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
