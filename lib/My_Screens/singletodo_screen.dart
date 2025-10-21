@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_new_app/models/todo.dart';
+import 'package:my_new_app/my_screens/alltodos_screen.dart';
 import 'package:my_new_app/providers/withprovider.dart';
 import 'package:provider/provider.dart';
 
@@ -61,6 +62,7 @@ class SingleTodoScreen extends StatelessWidget {
                 onPressed: isCHk == false
                     ? () {
                         provider.update(stodo);
+                        Navigator.of(context).pop();
                       }
                     : null,
                 style: ElevatedButton.styleFrom(

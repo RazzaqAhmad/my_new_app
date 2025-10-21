@@ -14,7 +14,7 @@ class AllTodosScreen extends StatefulWidget {
 class _AllTodosScreenState extends State<AllTodosScreen> {
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<TodoProvider>();
+    final provider = context.watch<TodoProvider>();
     return Scaffold(
       appBar: AppBar(
         actions: [
