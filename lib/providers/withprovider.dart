@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_new_app/models/todo.dart';
-import 'package:my_new_app/providers/withprovider.dart';
 
 class TodoProvider extends ChangeNotifier {
   final List<Todo> _todos = todolist;

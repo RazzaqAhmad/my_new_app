@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_new_app/models/todo.dart';
 import 'package:my_new_app/my_screens/singletodo_screen.dart';
 import 'package:my_new_app/providers/themprovider.dart';
 import 'package:my_new_app/providers/withprovider.dart';
@@ -15,19 +14,14 @@ class _AllTodosScreenState extends State<AllTodosScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<TodoProvider>();
+    final themprovider = context.read<ThemeProvider>();
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(
-              context.watch<ThemeProvider>().isDark
-                  ? Icons.dark_mode
-                  : Icons.light_mode,
-            ),
-            tooltip: context.watch<ThemeProvider>().isDark
-                ? 'Switch to Light Mode'
-                : 'Switch to Dark Mode',
-            onPressed: () => context.read<ThemeProvider>().toggleTheme(),
+            icon: Icon(Icons.palette),
+            tooltip: 'Switch to next theme Mode',
+            onPressed: () => themprovider.nextTheme(),
           ),
         ],
         centerTitle: true,
@@ -48,6 +42,9 @@ class _AllTodosScreenState extends State<AllTodosScreen> {
                   itemBuilder: (context, index) {
                     var singletodo = provider.todos[index];
                     return ListTile(
+                      hoverColor: themprovider.currentTheme.primaryColor,
+                      selectedColor:
+                          themprovider.currentTheme.scaffoldBackgroundColor,
                       leading: Text(
                         '${index + 1}=>',
                         style: TextStyle(
@@ -73,7 +70,7 @@ class _AllTodosScreenState extends State<AllTodosScreen> {
                         singletodo.iScompleted ? "Completed" : "Pendeing",
                         style: TextStyle(
                           color: singletodo.iScompleted
-                              ? Colors.green
+                              ? const Color.fromARGB(255, 220, 247, 221)
                               : Colors.red,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

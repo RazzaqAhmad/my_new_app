@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_new_app/models/todo.dart';
-import 'package:my_new_app/my_screens/alltodos_screen.dart';
 import 'package:my_new_app/providers/withprovider.dart';
 import 'package:provider/provider.dart';
 
@@ -72,6 +71,14 @@ class SingleTodoScreen extends StatelessWidget {
                   "Update",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+              ),
+              Row(
+                children: [
+                  Text(
+                    "WelCome${updatedTodo.title}",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ],
           ),

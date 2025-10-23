@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_new_app/My_Screens/alltodos_screen.dart';
-import 'package:my_new_app/providers/themprovider.dart';
-import 'package:my_new_app/providers/withprovider.dart';
 import 'package:provider/provider.dart';
+import 'providers/themprovider.dart';
+import 'My_Screens/alltodos_screen.dart';
+import 'providers/withprovider.dart';
 
 void main() {
   runApp(
@@ -11,7 +11,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => TodoProvider()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -21,10 +21,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = context.watch<ThemeProvider>();
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
+      title: 'Todo Multi-Theme',
       debugShowCheckedModeBanner: false,
-      title: 'Todo + Theme Provider',
       theme: themeProvider.currentTheme,
       home: const AllTodosScreen(),
     );
