@@ -5,7 +5,7 @@ import 'package:my_new_app/providers/withprovider.dart';
 import 'package:provider/provider.dart';
 
 class AllTodosScreen extends StatefulWidget {
-  const AllTodosScreen({Key? key}) : super(key: key);
+  const AllTodosScreen({super.key});
   @override
   State<AllTodosScreen> createState() => _AllTodosScreenState();
 }

@@ -14,7 +14,7 @@ class ThemeProvider extends ChangeNotifier {
         brightness: Brightness.light,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
         primaryColor: Colors.purple,
-        scaffoldBackgroundColor: const Color(0xFFEDE7F6),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 122, 58, 218),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.purple,
           foregroundColor: Colors.white,
@@ -45,7 +45,7 @@ class ThemeProvider extends ChangeNotifier {
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.purple,
-          foregroundColor: Colors.white,
+          foregroundColor: Color.fromARGB(255, 12, 12, 12),
         ),
       ),
       'dark': ThemeData(
@@ -79,7 +79,7 @@ class ThemeProvider extends ChangeNotifier {
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.deepPurpleAccent,
-          foregroundColor: Colors.white,
+          foregroundColor: Color.fromARGB(255, 17, 17, 17),
         ),
       ),
     },
@@ -90,7 +90,7 @@ class ThemeProvider extends ChangeNotifier {
         brightness: Brightness.light,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         primaryColor: Colors.green,
-        scaffoldBackgroundColor: const Color(0xFFE8F5E9),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 99, 235, 110),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.green,
           foregroundColor: Colors.white,
@@ -120,7 +120,7 @@ class ThemeProvider extends ChangeNotifier {
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.green,
-          foregroundColor: Colors.white,
+          foregroundColor: Color.fromARGB(255, 10, 10, 10),
         ),
       ),
       'dark': ThemeData(
@@ -165,7 +165,7 @@ class ThemeProvider extends ChangeNotifier {
         brightness: Brightness.light,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         primaryColor: Colors.blue,
-        scaffoldBackgroundColor: const Color(0xFFE3F2FD),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 97, 170, 223),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
@@ -195,7 +195,7 @@ class ThemeProvider extends ChangeNotifier {
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
+          foregroundColor: Color.fromARGB(255, 8, 8, 8),
         ),
       ),
       'dark': ThemeData(

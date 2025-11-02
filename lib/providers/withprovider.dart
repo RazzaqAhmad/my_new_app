@@ -14,6 +14,16 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addTodo(Todo todo) {
+    _todos.add(todo);
+    notifyListeners();
+  }
+
+  void removeTodo(Todo todo) {
+    _todos.removeWhere((t) => t.title == todo.title);
+    notifyListeners();
+  }
+
   void toggleCheck() {
     _isCheck = !_isCheck;
     notifyListeners();
